@@ -17,7 +17,7 @@ import Order from './pages/order.vue'
 import OrderConfirm from './pages/orderConfirm.vue'
 import OrderList from './pages/orderList.vue'
 import OrderPay from './pages/orderPay.vue'
-
+import Alipay from './pages/alipay.vue'
 
 export default new Router({
     // mode:history,
@@ -69,6 +69,11 @@ export default new Router({
                     path:'confirm',
                     name:'order-confirm',
                     component:OrderConfirm
+                },
+                {
+                    path:'alipay',
+                    name:'alipay',
+                    component:Alipay
                 }
                 
             ]
