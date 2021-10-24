@@ -8,10 +8,31 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 
+// import axios from 'axios'
+import jsonp from 'jsonp'
+
 export default {
   name: 'App',
   components: {
     HelloWorld
+  },
+  data () {
+    return {
+      data:0
+    }
+  },
+  mounted () {
+    
+    // axios.get(url).then(res=>{
+    //   console.log(res);
+    // })
+
+    //JSONP跨域 
+    let url = "/activity/servicetime"
+    jsonp(url,(err,res)=>{
+      let result = res;
+      this.data = result;
+    })
   }
 }
 </script>
