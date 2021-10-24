@@ -10,7 +10,7 @@
 import NavFooter from '../components/NavFooter.vue'
 import NavHeader from '../components/NavHeader.vue'
 export default {
-    name:'home',
+    name:'nav-home',
     components: { 
       NavHeader, 
       NavFooter, 
