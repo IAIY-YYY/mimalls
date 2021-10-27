@@ -10,7 +10,7 @@ Vue.config.productionTip = false
 Vue.prototype.axios = axios;
 
 //定义mockjs插件开关
-const mock = true;
+const mock = false;
 if (mock) {
   require('./mock/api')
 }
