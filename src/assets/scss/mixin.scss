@@ -1,6 +1,17 @@
 // flex 布局复用
+/* 
+    Vue的固定写法 Mixin  复用
+*/
 @mixin flex($hov:space-between,$col:center){/* 定义一个公共函数 并设置默认值*/
     display: flex;/* 清除块元素浮动 */
     justify-content: $hov;/* 均匀排列每个元素   首个元素放置于起点，末尾元素放置于终点 */ 
     align-items: $col;/* 元素在侧轴居中。如果元素在侧轴上的高度高于其容器，那么在两个方向上溢出距离相同 */
+}
+@mixin bgImg($w:0,$h:0,$img:'',$size:contain) {
+    display: inline-block;/* 设置为行内块元素 */
+    width: $w;
+    height: $h;
+    background: url($img) no-repeat center;
+    background-size: $size;/* contain:把图像图像扩展至最大尺寸，以使其宽度和高度完全适应内容区域.*/
+    
 }

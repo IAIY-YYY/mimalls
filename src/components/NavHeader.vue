@@ -56,8 +56,8 @@ export default {
 </script>
 
 <style lang="scss">/* 定义模板是scss规则  需要安装scss-loader插件*/
-@import url("../assets/scss/base.scss");/* 导入container属性的公共样式 */
-@import url("../assets/scss/mixin.scss");/* 对flex布局的复用 */
+@import "../assets/scss/base.scss";/* 导入container属性的公共样式 */
+@import "../assets/scss/mixin.scss";/* 对flex布局的复用 */
 .header{/* scss语法嵌套使用方法 */
     .nav-topbar{
         height: 39px;
@@ -65,10 +65,10 @@ export default {
         background-color: #333333;
         color: #b0b0b0;
         .container{
+            @include flex();/* 对重复的代码进行总结复用简化 */
             // display: flex;/* 清除块元素浮动 */
             // justify-content: space-between;/* 均匀排列每个元素   首个元素放置于起点，末尾元素放置于终点 */ 
             // align-items: center;/* 元素在侧轴居中。如果元素在侧轴上的高度高于其容器，那么在两个方向上溢出距离相同 */
-            @include flex();/* 对重复的代码进行总结复用简化 */
             a{
                 display: inline-block;/* 设置为行内块元素 */
                 color: #b0b0b0;
@@ -80,11 +80,12 @@ export default {
                 text-align: center;
                 color: #ffffff;
                 .icon-cart{
-                    display: inline-block;
-                    width: 16px;
-                    height: 12px;
-                    background: url("/imgs/icon-cart-checked.png") no-repeat center;
-                    background-size: contain;
+                    @include bgImg(16px,12px,"/imgs/icon-cart-checked.png",contain);/* 利用mixin简化下面的代码 */
+                    // display: inline-block;
+                    // width: 16px;
+                    // height: 12px;
+                    // background: url("/imgs/icon-cart-checked.png") no-repeat center;
+                    // background-size: contain;
                     margin-right: 4px;
                 }
             }
@@ -93,11 +94,8 @@ export default {
     }
     .nav-header{
         .container{
+            @include flex(); 
             height: 112px;
-            // display: flex;/* 通过flex进行布局 */
-            // justify-content: space-between;/* 首个元素放置于起点，末尾元素放置于终点 */
-            // align-items: center;/* 使元素在块内居中 */
-             @include flex(); 
             .header-logo{
                 display: inline-block;/* 行内块元素 */
                 width: 55px;
@@ -110,20 +108,12 @@ export default {
                     /* 通过伪类 (设置两张图片)  */
                     &:before{
                         content:'';/* 内容为空 */
-                        display: inline-block;
-                        width: 55px;
-                        height: 55px;
-                        background:url('/imgs/mi-logo.png') no-repeat center;
-                        background-size: 55px;
+                        @include bgImg(55px,55px,'/imgs/mi-logo.png',55px);/* 利用mixin简化代码 */
                         transition: margin .2s;/* 指定哪一个元素需要进行过渡  */
                     }
                     &:after{
                         content:'';/* 内容为空  不加的话伪类生成不了。必须加content*/
-                        display: inline-block;
-                        width: 55px;
-                        height: 55px;
-                        background:url('/imgs/mi-home.png') no-repeat center;
-                        background-size: 55px;
+                        @include bgImg(55px,55px,'/imgs/mi-home.png',55px);/* 利用mixin简化代码 */
                     }
                     &:hover:before{
                         margin-left: -55px;
@@ -150,7 +140,7 @@ export default {
                         /* 用于控制item-menu下拉菜单的 */
                     }
                 }
-            }
+            } 
             .header-search{
                 width: 319px;
                 .wapper{
@@ -167,11 +157,7 @@ export default {
                         padding-left: 14px;
                     }
                     a{/* 用于控制背景图片 */
-                        display: inline-block;/* 需要设置行内块元素 */
-                        width: 18px;
-                        height: 18px;
-                        background: url("/imgs/icon-search.png") no-repeat center;
-                        background-size: contain;/* contain 就是使图片充满元素 经常使用 */
+                         @include bgImg(18px,18px,'/imgs/icon-search.png',contain);/* 利用mixin简化代码 */
                         margin-left:17px ;
                     }
                 }
