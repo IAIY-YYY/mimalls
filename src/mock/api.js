@@ -3,7 +3,8 @@
 */
 import Mock from 'mockjs'
 
-// 定义参数地址和返回值
+// 定义参数地址和返回值y
+
 Mock.mock('/api/user/login',{
     "status": 0,
     "data": {
