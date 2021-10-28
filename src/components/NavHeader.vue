@@ -148,13 +148,11 @@ export default {
             //访问数据。 
             this.axios.get('/products',{
                 params:{/* get的请求参数 */
-                    categoryId:'100012'
+                    categoryId:'100012'/* 请求 /products?categoryId=100012 中的数据*/,
+                    pageSize:6,
                 }
             }).then(res=>{/* 获取数据 */
-                if(res.list.length>=6){
-                    this.phoneList = res.list.slice(0,6);/* 将数据进行存储 */
-                    
-                }
+                    this.phoneList = res.list;/* 将数据进行存储 */
             });
         },
         goToCart(){
@@ -268,6 +266,7 @@ export default {
                         overflow: hidden;/* 将元素隐藏。不触发 hover 条件*/
                         border-top: 1xp solid #e5e5e5;
                         box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);/* 阴影 */
+                        background-color: #ffffff;
                         z-index: 10;
                         transition: height .5s;
                         .product{
