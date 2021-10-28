@@ -61,7 +61,6 @@
                     <img src="/imgs/2.webp" alt="">
                 </a>
             </div>
-            
         </div>
         <div class="product-box"><!-- 手机商品展示 -->
             <div class="container">
