@@ -68,7 +68,7 @@
                 <h2>手机</h2>
                 <div class="wrapper"><!-- 大框架 -->
                     <div class="banner-left"><!-- 框架内左边的图片 -->
-                        <a href="/#/product/35"><img src="/imgs/mix-alpha.jpg" alt=""></a>
+                        <a href="/#/product/35"><img src="/imgs/mix-alpha.webp" alt=""></a>
                     </div>
                     <div class="list-box"><!-- 各商品内的信息 -->
                         <div class="list" v-for="(arr,index) in phoneList" :key="index">
@@ -149,19 +149,19 @@ export default {
                 },
                 {
                     id:'45',
-                    img:'/imgs/slider/slide-2.jpg'
+                    img:'/imgs/slider/slide-2.webp'
                 },
                 {
                     id:'46',
-                    img:'/imgs/slider/slide-3.jpg'
+                    img:'/imgs/slider/slide-3.webp'
                 },
                 {
                     id:'',
-                    img:'/imgs/slider/slide-4.jpg'
+                    img:'/imgs/slider/slide-4.webp'
                 },
                 {
                     id:'',
-                    img:'/imgs/slider/slide-5.jpg'
+                    img:'/imgs/slider/slide-5.webp'
                 }
             ],
             menuList:[/* 设置一个二位数组。存放菜单 */
