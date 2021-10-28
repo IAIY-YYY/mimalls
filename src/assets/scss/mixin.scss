@@ -15,3 +15,10 @@
     background-size: $size;/* contain:把图像图像扩展至最大尺寸，以使其宽度和高度完全适应内容区域.*/
     
 }
+@mixin position($pos:absolute,$top:0,$left:0,$w:100%,$h:100%){
+    position: $pos;
+    top: $top;
+    left: $left;
+    width: $w;
+    height: $h;
+}

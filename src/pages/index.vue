@@ -90,16 +90,28 @@
                 </div>
             </div>
         </div>
-        <service-bar></service-bar>
+        <service-bar></service-bar><!-- 底栏服务内容 -->
+        <modal 
+            title="提示" 
+            sureText="查看购物车" 
+            btnType="1" 
+            modalType="middle" 
+            :showModal="true">
+            <template v-slot:body><!-- 新版本插槽的使用 -->
+                <p>商品添加成功！</p>
+            </template>
+        </modal>
     </div>
 </template>
 
 <script>
 import ServiceBar from '../components/Service-bar.vue'
+import Modal from '../components/Modal.vue'
 
 /* 导入轮播图插件中的组件 */
 import {Swiper,SwiperSlide} from 'vue-awesome-swiper'  
 import 'swiper/css/swiper.css'/* 需要导入样式，否则不会生效 */
+
 
 
 export default {
@@ -107,7 +119,8 @@ export default {
     components:{
         ServiceBar,
         Swiper,
-        SwiperSlide
+        SwiperSlide,
+        Modal
     },
     data () {
         return {
@@ -210,10 +223,11 @@ export default {
             this.axios.get('/products',{
                 params:{
                     categoryId:100012,
-                    pageSize:8
+                    pageSize:14
                 }
             }).then(res=>{/* 利用axios请求参数 */
                 // console.log(res)
+                res.list = res.list.slice(6,14)/* 去后面的数据。保持图片的一致 */
                 this.phoneList = [res.list.slice(0,4),res.list.slice(4,8)]/* 二维数组，分割元素 */
 
             })
@@ -222,7 +236,7 @@ export default {
 }
 </script>
 
-<style  lang="scss">
+<style lang="scss">
 @import "../assets/scss/mixin.scss";/* 对布局的复用 */
 .index{
     .swiper-box{
