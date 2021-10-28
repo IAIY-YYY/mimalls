@@ -1,7 +1,7 @@
 <template>
     <div class="index">
         <div class="container">
-            <div class="swiper-box">
+            <div class="swiper-box"><!-- 轮播图 -->
                 <div class="nav-menu"><!-- 轮播图旁的导航 -->
                     <ul class="menu-wrap">
                         <li class="menu-item">
@@ -51,9 +51,44 @@
                     <div class="swiper-button-next" slot="button-next"></div>
                 </swiper>
             </div>
-            <div class="ads-box"></div>
-            <div class="banner"></div>
-            <div class="product-box"></div>
+            <div class="ads-box"><!-- 广告位s -->
+                <a :href="'/#/product/'+item.id" v-for="(item,index) in adsList" :key="index">
+                    <img :src="item.img" alt="">
+                </a>
+            </div>
+            <div class="banner"><!-- 大图展示 -->
+                <a :href="'/#/product/30'" >
+                    <img src="/imgs/banner-1.png" alt="">
+                </a>
+            </div>
+            
+        </div>
+        <div class="product-box"><!-- 手机商品展示 -->
+            <div class="container">
+                <h2>手机</h2>
+                <div class="wrapper"><!-- 大框架 -->
+                    <div class="banner-left"><!-- 框架内左边的图片 -->
+                        <a href="/#/product/35"><img src="/imgs/mix-alpha.jpg" alt=""></a>
+                    </div>
+                    <div class="list-box"><!-- 各商品内的信息 -->
+                        <div class="list" v-for="(arr,index) in phoneList" :key="index">
+                            <div class="item" v-for="(item,index) in arr" :key="index"><!-- 具体的商品框架 -->
+                                <a :href="'/#/product/'+item.id">
+                                    <!-- <span :class="{'new-pro':'index%2==0'}">新品</span> -->
+                                    <div class="item-img">
+                                        <img :src="item.mainImage" alt="">
+                                        <h3>{{item.name}}</h3>
+                                        <p>{{item.subtitle}}</p>
+                                    </div>
+                                </a>
+                                <div class="item-info">
+                                    <p class="price">{{item.price}}元</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <service-bar></service-bar>
     </div>
@@ -144,20 +179,57 @@ export default {
                 [0,0,0,0],
                 [0,0,0,0],
                 [0,0,0,0],
-            ]
+            ],
+            adsList:[/* 广告位数据 */
+                {
+                    id:33,
+                    img:'imgs/ads/ads-1.png'
+                },
+                {
+                    id:48,
+                    img:'imgs/ads/ads-2.jpg'
+                },
+                {
+                    id:45,
+                    img:'imgs/ads/ads-3.png'
+                },
+                {
+                    id:47,
+                    img:'imgs/ads/ads-4.jpg'
+                }
+
+            ],
+            phoneList:[],/* 存储手机商品数据 */
+        }
+    },
+    mounted(){
+        this.init();
+    },
+    methods:{
+        init(){
+            this.axios.get('/products',{
+                params:{
+                    categoryId:100012,
+                    pageSize:8
+                }
+            }).then(res=>{/* 利用axios请求参数 */
+                // console.log(res)
+                this.phoneList = [res.list.slice(0,4),res.list.slice(4,8)]/* 二维数组，分割元素 */
+
+            })
         }
     }
 }
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
 @import "../assets/scss/mixin.scss";/* 对布局的复用 */
 .index{
     .swiper-box{
         .nav-menu{
             position: absolute;
             width: 264px;
-            height: 459px;
+            height: 451px;
             z-index: 9;
             padding: 26px 0;/* 内边距上下26  左右0 */
             background-color: #55585a7a;
@@ -190,7 +262,7 @@ export default {
                     .children{
                         overflow: hidden;
                         width: 0px;
-                        height: 459px;
+                        height: 451px;
                         background-color: #FFFFFF;
                         position: absolute;
                         top: 0;
@@ -233,6 +305,110 @@ export default {
                 width: 100%;
             }
         }
+    }
+    .ads-box{
+        @include flex();
+        margin-top: 52px;
+        margin-bottom: 31px;
+        a{
+            width: 296px;
+            height: 167px;
+
+
+        }
+    }
+    .banner{
+        margin-bottom: 50px;
+    }
+    .product-box{
+        background-color: #F5f5f5;
+        padding:30px 0 50px ;
+        h2{
+            font-size: 22px;
+            height: 21px;
+            line-height: 21px;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .wrapper{
+            display: flex;
+            .banner-left{
+                margin-right: 16px;
+                img{
+                    width: 224px;
+                    height: 619px;
+                }
+            }
+            .list-box{
+                .list{
+                    @include flex();
+                    width: 986px;
+                    margin-bottom: 14px;
+                    &:last-child{/* 排除掉最后一行的样式 */
+                        margin-bottom: 0;
+                    }
+                    .item{
+                        width: 236px;
+                        height: 302px;
+                        text-align: center;
+                        background-color: #FFFFFF;
+                        transition: all 0.2s linear;
+                        cursor: pointer;
+                        &:hover{
+                            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+                            transform: translate3d(0,-2px,0);
+                        }
+                        // .span{
+                        //     display: inline-block;
+                        //     width: 67px;
+                        //     height: 24px;
+                        //     font-size: 14px;
+                        //     line-height: 24px;
+                        //     color: #FFFFFF;
+                        //     &.new-pro{/* 伪类。新品颜色 */
+                        //         background-color: #7ecf68;
+                        //     }
+                        //     &.kell-pro{/* 秒杀颜色 */
+                        //         background-color: #e82626;
+                        //     }
+                        // }
+                        .item-img{
+                            margin-top: 20px;
+                            img{
+                                width: 100%;
+                                height: 195px;/* 商品图片的大小 */
+                            }
+                            h3{
+                                color: #333333;
+                                font-size: 14px;
+                                line-height: 14px;
+                                font-weight: bold;
+                            }
+                            p{
+                                color:#999999;
+                                line-height: 13px;
+                                margin: 6px auto 13px;
+                            }
+                        }
+                        .item-info{
+                            .price{
+                                color: #F20a0a;
+                                font-size: 14px;
+                                font-weight: bold;
+                                cursor: pointer;/* 触摸鼠标变成小手 */
+                                &:after{
+                                    content:'';
+                                    @include bgImg(22px,22px,'/imgs/icon-cart-hover.png');
+                                    margin-left: 5px;
+                                    vertical-align: middle;/* 图文居中 */
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
     }
 }
 </style>

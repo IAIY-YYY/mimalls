@@ -167,7 +167,7 @@ export default {
 </script>
 
 <style lang="scss">/* 定义模板是scss规则  需要安装scss-loader插件*/
-@import "../assets/scss/base.scss";/* 导入container属性的公共样式 */
+@import "../assets/scss/base.scss";/* 导入container属性的公共样式  全局的 如果加上scoped会出错*/
 @import "../assets/scss/mixin.scss";/* 对flex布局的复用 */
 @import "../assets/scss/config.scss";/* 引用配置变量 */
 .header{/* scss语法嵌套使用方法 */
