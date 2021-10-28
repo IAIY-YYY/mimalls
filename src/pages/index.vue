@@ -58,7 +58,7 @@
             </div>
             <div class="banner"><!-- 大图展示 -->
                 <a :href="'/#/product/30'" >
-                    <img src="/imgs/banner-1.png" alt="">
+                    <img src="/imgs/2.webp" alt="">
                 </a>
             </div>
             
@@ -96,7 +96,7 @@
             sureText="查看购物车" 
             btnType="1" 
             modalType="middle" 
-            :showModal="true">
+            :showModal="false">
             <template v-slot:body><!-- 新版本插槽的使用 -->
                 <p>商品添加成功！</p>
             </template>
@@ -196,7 +196,7 @@ export default {
             adsList:[/* 广告位数据 */
                 {
                     id:33,
-                    img:'imgs/ads/ads-1.png'
+                    img:'imgs/ads/ads-1.jpg'
                 },
                 {
                     id:48,
@@ -327,8 +327,11 @@ export default {
         a{
             width: 296px;
             height: 167px;
-
-
+            transition: all 0.2s linear;
+             &:hover{
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+                transform: translate3d(0,-2px,0);
+            }
         }
     }
     .banner{
@@ -348,6 +351,11 @@ export default {
             display: flex;
             .banner-left{
                 margin-right: 16px;
+                transition: all 0.2s linear;
+                &:hover{
+                    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+                    transform: translate3d(0,-2px,0);
+                }
                 img{
                     width: 224px;
                     height: 619px;

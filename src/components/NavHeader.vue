@@ -211,25 +211,26 @@ export default {
             height: 112px;
             .header-logo{
                 display: inline-block;/* 行内块元素 */
-                width: 55px;
-                height: 55px;
+                width: 60px;
+                height: 60px;
+                border-radius: 40%;
                 background-color: #FF6600;
                 a{/* 两张logo的长度width */
                     display: inline-block;
-                    width: 110px;
-                    height: 55px;
+                    width: 120px;
+                    height: 60px;
                     /* 通过伪类 (设置两张图片)  */
                     &:before{
                         content:'';/* 内容为空 */
-                        @include bgImg(55px,55px,'/imgs/mi-logo.png',55px);/* 利用mixin简化代码 */
+                        @include bgImg(60px,60px,'/imgs/mi-logo.png',55px);/* 利用mixin简化代码 */
                         transition: margin .2s;/* 指定哪一个元素需要进行过渡  */
                     }
                     &:after{
                         content:'';/* 内容为空  不加的话伪类生成不了。必须加content*/
-                        @include bgImg(55px,55px,'/imgs/mi-home.png',55px);/* 利用mixin简化代码 */
+                        @include bgImg(60px,60px,'/imgs/mi-home.png',55px);/* 利用mixin简化代码 */
                     }
                     &:hover:before{
-                        margin-left: -55px;
+                        margin-left: -60px;
                         transition: margin .2;/* 过渡元素 指定元素margin  2s过渡 */
                     }
                 }
