@@ -10,7 +10,7 @@
                                 <ul v-for="(item,index) in menuList" :key="index">
                                     <li v-for="(sub,index) in item" :key="index">
                                         <a :href="sub?'#/poduct/'+sub.id:''"><!-- 判断sub是否为true。判断取值 -->
-                                            <img :src="sub?sub.img:'/imgs/item-box-1.png'" alt="">
+                                            <img v-lazy="sub?sub.img:'/imgs/item-box-1.png'" alt="">
                                             {{sub?sub.name:'小米9'}}
                                         </a>
                                     </li>
@@ -44,7 +44,7 @@
                 <swiper :options="swiperOption">
                     <!-- 图片轮播 -->
                     <swiper-slide v-for="(item,index) in slideList" :key="index">
-                        <a :href="'/#/product/'+item.id"><img :src="item.img" alt=""></a>
+                        <a :href="'/#/product/'+item.id"><img v-lazy="item.img" alt=""></a>
                     </swiper-slide>
                     <div class="swiper-pagination" slot="pagination"></div><!-- 分页器 -->
                     <div class="swiper-button-prev" slot="button-prev"></div>
@@ -53,12 +53,12 @@
             </div>
             <div class="ads-box"><!-- 广告位s -->
                 <a :href="'/#/product/'+item.id" v-for="(item,index) in adsList" :key="index">
-                    <img :src="item.img" alt="">
+                    <img v-lazy="item.img" alt="">
                 </a>
             </div>
             <div class="banner"><!-- 大图展示 -->
                 <a :href="'/#/product/30'" >
-                    <img src="/imgs/2.webp" alt="">
+                    <img v-lazy="'/imgs/2.webp'" alt="">
                 </a>
             </div>
         </div>
@@ -67,7 +67,7 @@
                 <h2>手机</h2>
                 <div class="wrapper"><!-- 大框架 -->
                     <div class="banner-left"><!-- 框架内左边的图片 -->
-                        <a href="/#/product/35"><img src="/imgs/mix-alpha.webp" alt=""></a>
+                        <a href="/#/product/35"><img v-lazy="'/imgs/mix-alpha.webp'" alt=""></a>
                     </div>
                     <div class="list-box"><!-- 各商品内的信息 -->
                         <div class="list" v-for="(arr,index) in phoneList" :key="index">
@@ -75,13 +75,13 @@
                                 <a :href="'/#/product/'+item.id">
                                     <!-- <span :class="{'new-pro':'index%2==0'}">新品</span> -->
                                     <div class="item-img">
-                                        <img :src="item.mainImage" alt="">
+                                        <img v-lazy="item.mainImage" alt="">
                                         <h3>{{item.name}}</h3>
                                         <p>{{item.subtitle}}</p>
                                     </div>
                                 </a>
                                 <div class="item-info">
-                                    <p class="price">{{item.price}}元</p>
+                                    <p class="price" @click="addCart(item.id)">{{item.price}}元</p>
                                 </div>
                             </div>
                         </div>
@@ -93,9 +93,12 @@
         <modal 
             title="提示" 
             sureText="查看购物车" 
-            btnType="1" 
+            btnType="3" 
             modalType="middle" 
-            :showModal="false">
+            :showModal="showModal"
+            @submit="goToCart"
+            @cancel="showModal=false"
+            >
             <template v-slot:body><!-- 新版本插槽的使用 -->
                 <p>商品添加成功！</p>
             </template>
@@ -212,6 +215,7 @@ export default {
 
             ],
             phoneList:[],/* 存储手机商品数据 */
+            showModal:false,
         }
     },
     mounted(){
@@ -230,6 +234,20 @@ export default {
                 this.phoneList = [res.list.slice(0,4),res.list.slice(4,8)]/* 二维数组，分割元素 */
 
             })
+        },
+        addCart(){/* 添加购物车 */
+            this.showModal = true;/* 添加购物车的时候弹窗显示 */
+            // this.axios.post('/carts',{
+            //     productId:id,
+            //     selected:true,/* 加入购物车默认式选中状态 */
+            // }).then(()=>{
+
+            // }).catch(()=>{
+            //     this.showModal = true
+            // })
+        },
+        goToCart(){/* 查看购物车 */
+            this.$router.push('/cart');
         }
     }
 }
@@ -353,7 +371,7 @@ export default {
                 transition: all 0.2s linear;
                 &:hover{
                     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-                    transform: translate3d(0,-2px,0);
+                    transform: translate3d(0,-2px,0);/* 3dy轴平移-2px */
                 }
                 img{
                     width: 224px;

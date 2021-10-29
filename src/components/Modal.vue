@@ -1,22 +1,29 @@
 <template>
-    <div class="modal" v-show="showModal"><!-- showModal弹窗是否出现 -->
-       <div class="mask"><!-- 整个页面框架 -->
+    <transition name="slide">
+        <div class="modal" v-show="showModal"><!-- showModal弹窗是否出现 -->
+            <div class="mask"><!-- 整个页面框架 -->
 
-       </div>
-       <div class="modal-dialog"><!-- 对话框 -->
-            <div class="modal-header"><!-- 头部 -->
-                <span>标题</span>
-                <a href="javascript:;" class="icon-close"></a><!-- 关闭按钮 -->
             </div>
-            <div class="modal-body"><!-- 内容  定义插槽 输入不同的内容-->
-                <slot name="body"></slot>
-            </div>
-            <div class="modal-footer"><!-- 底部 -->
-                <a href="javascript:;" class="btn">确定</a><!-- 提交或取消按钮 -->
-                 <a href="javascript:;" class="btn">取消</a><!-- 提交或取消按钮 -->
+            <div class="modal-dialog"><!-- 对话框 -->
+                <div class="modal-header"><!-- 头部 -->
+                    <span>{{title}}</span>
+                    <a href="javascript:;" class="icon-close" @click="$emit('cancel')"></a><!-- 关闭按钮 -->
+                </div>
+                <div class="modal-body"><!-- 内容  定义插槽 输入不同的内容-->
+                    <slot name="body"></slot>
+                </div>
+                <div class="modal-footer"><!-- 底部 -->
+                    <a href="javascript:;" class="btn" v-if="btnType==1" @click="$emit('submit')">{{sureText}}</a>
+                    <a href="javascript:;" class="btn" v-if="btnType==2" @click="$emit('cancel')">{{cancelText}}</a>
+                    <div class="btn-group" v-if="btnType==3">
+                        <a href="javascript:;" class="btn" @click="$emit('submit')">{{sureText}}</a><!-- 提交或取消按钮 -->
+                        <a href="javascript:;" class="btn" @click="$emit('cancel')">{{cancelText}}</a><!-- 提交或取消按钮 -->
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </transition>
+    
 </template>
 
 <script>
@@ -38,12 +45,12 @@ export default {
             default:'取消'
         },
         showModal:Boolean,/* 判断弹窗是否显示 */
-    }
+    },
 }
 </script>
 
 <style lang="scss">
 @import "../assets/scss/mixin.scss";/* 要放在最前面。否则出错 */
 @import "../assets/scss/config.scss";
-@import "../assets/scss/modal.scss";
+@import "../assets/scss/modal.scss";/* 可以引用上述变量的值 */
 </style>

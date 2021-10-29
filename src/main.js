@@ -1,6 +1,13 @@
 import Vue from 'vue'
 import router from './router'
 import App from './App.vue'
+import VueLazyload from 'vue-lazyload'
+
+
+Vue.use(VueLazyload,{/* 可以进行全局配置 */
+  loading:'/imgs/loading-svg/loading-bars.svg',/* 会有一个指定的动画图片 */
+})
+
 
 // import env from './env'
 import axios from 'axios'
@@ -9,11 +16,11 @@ Vue.config.productionTip = false
 // 将axios设置到原型中，这样我们就可以this.axios调用了
 Vue.prototype.axios = axios;
 
-//定义mockjs插件开关
-const mock = false;
-if (mock) {
-  require('./mock/api')
-}
+//定义mockjs插件开关  mockjs 模式获取axios数据
+// const mock = false;
+// if (mock) {
+//   require('./mock/api')
+// }
 
 
 //根据前端的跨域方式做调整

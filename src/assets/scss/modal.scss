@@ -1,8 +1,49 @@
 .modal{
+    z-index: 10;
     @include position(fixed);
+    transition: all .5s;/* 所有动画过渡5s vue动画 */
     .mask{
         @include position(fixed);/* 覆盖整个页面 */
         background-color:$colorI;
         opacity: 0.5;
+    }
+    // &.slide-enter-active中的 & 是scss语法。相当于多一个class="slide-enter-active"
+    &.slide-enter-active{/* vue动画 */
+        top: 0;
+    }
+    &.slide-leave-active{/* vue动画 */
+        top: -100%;
+    }
+    &.slide-enter{/* vue动画transition的定义样式  enter要放在active下面 */
+        top: -100%;
+    }
+    .modal-dialog{/* 对话框样式 */
+        @include position(absolute,40%,50%,660px,auto);/* 设置对话框在中间部分 */
+        background-color: $colorG;
+        transform: translate(-50%,-50%);/* transform属性允许你旋转，缩放，倾斜或平移translate给定元素 */
+        .modal-header{
+            height: 60px;
+            background-color: $colorJ;
+            padding: 0 25px;/* 上下0  左右25 */
+            line-height: 60px;/* 行高 */
+            font-size: $fontI;
+            .icon-close{
+                @include positionImg(absolute,23px,25px,14px,14px,'/imgs/icon-close.png');
+                transition: transform .3s linear;
+                &:hover{
+                    transform: scale(1.5);
+                }
+            }
+        }
+        .modal-body{
+            padding: 42px 40px 54px;
+            font-size: 14px;
+        }
+        .modal-footer{
+            height: 82px;
+            line-height: 82px;/* 文字垂直居中 */
+            text-align: center;/* 文字左右居中 */
+            background-color: $colorJ;
+        }
     }
 }
