@@ -61,15 +61,15 @@ export default {
     },
     //注册
     register(){
-        this.axios.post('/user/register',{
-            usernam:'admin1',
-            password:'admin1',
-            email:'admin1@163.com'
-        }).then(()=>{
-            alert("注册成功")
-        })
-    }
-  }
+            this.axios.post('/user/register',{
+                usernam:'admin1',
+                password:'admin1',
+                email:'admin1@163.com'
+            }).then(()=>{
+                alert("注册成功")
+            })
+        }
+      }
 }
 </script>
 <style lang="scss">

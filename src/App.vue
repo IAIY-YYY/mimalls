@@ -25,8 +25,9 @@ export default {
         登录信息已经保存在服务器中。
         可以直接利用接口获取用户信息了
       */
-      this.axios.get('/user').then(()=>{
+      this.axios.get('/user').then((res)=>{
         // to-do 保存在Vuex中
+        console.log(res)
       })
     },
     getCartCount(){/* 获取购物车数量 */

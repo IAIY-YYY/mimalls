@@ -3,6 +3,7 @@ import router from './router'
 import App from './App.vue'
 import VueLazyload from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
+import store from './store'
 
 
 Vue.use(VueLazyload,{/* 可以进行全局配置 */
@@ -58,8 +59,8 @@ axios.interceptors.response.use((response)=>{
 });
 
 
-
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')
