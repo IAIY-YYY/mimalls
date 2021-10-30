@@ -1,15 +1,129 @@
 <template>
-    <div>
-       product
+    <div class="product">
+       <product-param>
+           <template v-slot:buy><!-- 插槽的新语法 -->
+               <button class="btn">立即购买</button><!-- class样式已经全局定义 -->
+           </template>
+       </product-param>
+       <ul>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+           <li>ssss</li>
+       </ul>
     </div>
 </template>
 
 <script>
+import ProductParam from '../components/ProductParam.vue'
 export default {
+  components: { 
+      ProductParam 
+    },
     name:'product',
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+.product{
+    button{
+        margin-left: 10px;
+    }
+}
 </style>

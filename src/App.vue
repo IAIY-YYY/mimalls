@@ -27,15 +27,19 @@ export default {
       */
       this.axios.get('/user').then((res)=>{
         // to-do 保存在Vuex中
-        console.log(res)
+        // 为了防止页面刷新。再次进行存值。如果没有这行的话，刷新之后usename不存在
+        this.$store.dispatch('saveUserName',res.username);/* 存值。重新刷新数值还在 */
+
       })
     },
     getCartCount(){/* 获取购物车数量 */
       /* 
         和获取用户信息相同
       */
-      this.axios.get('/carts/products/sum').then(()=>{
+      this.axios.get('/carts/products/sum').then((res)=>{
         // to-do 保存在Vuex中
+        this.$store.dispatch('saveCartCount',res);
+
       })
     }
   }

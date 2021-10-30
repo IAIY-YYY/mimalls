@@ -56,15 +56,16 @@ export default {
             password
         }).then((res)=>{
             this.$cookie.set('userId',res.id,{expores:'1M'});/* 可以查找插件npmjs查看vue-cookie的用法 */
+            this.$store.dispatch('saveUserName',res.username)
             this.$router.push('/index');
         })
     },
     //注册
     register(){
             this.axios.post('/user/register',{
-                usernam:'admin1',
-                password:'admin1',
-                email:'admin1@163.com'
+                username:'admin11',
+                password:'admin11',
+                email:'admin11@163.com'
             }).then(()=>{
                 alert("注册成功")
             })
