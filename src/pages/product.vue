@@ -43,6 +43,7 @@
                 <div class="video-box"><!-- 视频盒子 -->
                     <div class="overlay"></div>><!-- 视频的制造 -->
                     <div class="video"><!-- 视频 -->
+                        <span class="icon-close"></span><!-- 添加关闭按钮 -->
                         <!-- controls:视频播放控件 需要设置视频才可以播放 --> 
                         <!-- autoplay自动播放 -->
                         <!-- muted静音输出 -->
@@ -184,6 +185,14 @@ export default {
                 transform: translate(-50%,-50%);
                 width: 1000px;//设置视频大小
                 height: 536px;
+                .icon-close{
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    cursor:pointer;
+                    @include bgImg(20px,20px,'/imgs/icon-close.png');
+                    z-index: 10;
+                }
                 video{
                     width: 100%;//填充整个父容器
                     height: 100%;
