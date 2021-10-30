@@ -185,12 +185,14 @@ export default {
                 display: inline-block;/* 设置为行内块元素 */
                 color: #b0b0b0;
                 margin-right: 17px;
+                
             }
             .my-cart{
                 width: 110px;
                 background-color: #FF6600;
                 text-align: center;
                 color: #ffffff;
+                margin-right:0;
                 .icon-cart{
                     @include bgImg(16px,12px,"/imgs/icon-cart-checked.png",contain);/* 利用mixin简化下面的代码 */
                     // display: inline-block;

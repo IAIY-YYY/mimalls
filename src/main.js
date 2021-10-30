@@ -2,11 +2,13 @@ import Vue from 'vue'
 import router from './router'
 import App from './App.vue'
 import VueLazyload from 'vue-lazyload'
+import VueCookie from 'vue-cookie'
 
 
 Vue.use(VueLazyload,{/* 可以进行全局配置 */
   loading:'/imgs/loading-svg/loading-bars.svg',/* 会有一个指定的动画图片 */
-})
+});
+Vue.use(VueCookie);
 
 
 // import env from './env'
@@ -32,6 +34,10 @@ axios.defaults.timeout = 8000;//超时时间
 axios.interceptors.response.use((response)=>{
   // 获取值
   let res = response.data;
+
+  // 做出限制。只有在index页面才可以看。其他页面未登录则会跳转到login中
+  let path = location.hash;
+
   /* 
   内部固定意思
     data:[] 数据返回
@@ -41,10 +47,13 @@ axios.interceptors.response.use((response)=>{
   if(res.status == 0 ){
     return res.data;
   }else if(res.status == 10 ){//自定义状态码 此处10 为未登录状态码
-    // 在这里取不到router，所以用window
-    window.location.href = '/#/login';
+    if(path!='/#/index'){/* 不等于index。则跳转到login */
+      // 在这里取不到router，所以用window
+      window.location.href = '/#/login';
+    }
   }else{
     alert(res.msg);
+    return Promise.reject(res);/* 对错误信息进行抛出 */
   }
 });
 

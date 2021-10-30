@@ -16,7 +16,27 @@ export default {
     }
   },
   mounted () {
-    
+    this.getUser();
+    this.getCartCount();
+  },
+  methods: {
+    getUser(){/* 获取用户信息 */
+      /* 后台已经创建接口。
+        登录信息已经保存在服务器中。
+        可以直接利用接口获取用户信息了
+      */
+      this.axios.get('/user').then(()=>{
+        // to-do 保存在Vuex中
+      })
+    },
+    getCartCount(){/* 获取购物车数量 */
+      /* 
+        和获取用户信息相同
+      */
+      this.axios.get('/carts/products/sum').then(()=>{
+        // to-do 保存在Vuex中
+      })
+    }
   }
 }
 </script>
