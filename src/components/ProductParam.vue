@@ -2,7 +2,7 @@
     <div class="nav-bar" :class="{'is_fixed':isFixed}"><!-- 详情页顶部导航 -->
         <div class="container">
             <div class="pro-title"><!-- 标题 -->
-                小米8
+                {{title}}
             </div>
             <div class="pro-param"><!-- 参数介绍 -->
                 <a href="javascript:;">概述</a><span>|</span>
@@ -17,6 +17,11 @@
 <script>
 export default {
     name:'nav-bar',
+    props: {
+        title:{
+            type:String,
+        }
+    },
     data () {
         return {
             isFixed:false,

@@ -25,7 +25,7 @@ export default {
         登录信息已经保存在服务器中。
         可以直接利用接口获取用户信息了
       */
-      this.axios.get('/user').then((res)=>{
+      this.axios.get('/user').then((res={})=>{
         // to-do 保存在Vuex中
         // 为了防止页面刷新。再次进行存值。如果没有这行的话，刷新之后usename不存在
         this.$store.dispatch('saveUserName',res.username);/* 存值。重新刷新数值还在 */

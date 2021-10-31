@@ -235,16 +235,18 @@ export default {
 
             })
         },
-        addCart(){/* 添加购物车 */
-            this.showModal = true;/* 添加购物车的时候弹窗显示 */
-            // this.axios.post('/carts',{
-            //     productId:id,
-            //     selected:true,/* 加入购物车默认式选中状态 */
-            // }).then(()=>{
-
-            // }).catch(()=>{
-            //     this.showModal = true
-            // })
+        addCart(id){/* 添加购物车 */
+            
+            this.axios.post('/carts',{
+                productId:id,
+                selected:true,/* 加入购物车默认式选中状态 */
+            }).then((res)=>{
+                this.showModal = true;/* 添加购物车的时候弹窗显示 */
+                this.$store.dispatch('saveCartCount',res.cartTotalQuantity);//更新购物车数量
+                
+            }).catch(()=>{
+                this.showModal = true
+            })
         },
         goToCart(){/* 查看购物车 */
             this.$router.push('/cart');

@@ -1,14 +1,14 @@
 <template>
     <div class="product">
-       <product-param>
+       <product-param :title='product.name' class="product-param">
            <template v-slot:buy><!-- 插槽的新语法 -->
-               <button class="btn">立即购买</button><!-- class样式已经全局定义 -->
+               <button class="btn" @click="buy">立即购买</button><!-- class样式已经全局定义 -->
            </template>
        </product-param>
        <div class="content">
             <div class="item-bg">
-                <h2>小米8</h2>
-                <h3>8周年旗舰店</h3>
+                <h2>{{product.name}}</h2>
+                <h3>{{product.subtitle}}</h3>
                 <p>
                     <a href="" id="">全球首款双频 GP</a>
                     <span>|</span>
@@ -19,7 +19,7 @@
                     <a href="" id="">红外人脸识别</a>
                 </p>
                 <div class="price">
-                    <span>￥<em>1799</em></span>
+                    <span>￥<em>{{product.price}}</em></span>
                 </div>
             </div>
             <div class="item-bg-2"></div>
@@ -39,11 +39,11 @@
             <div class="item-video">
                 <h2>60帧超慢动作摄影<br/>慢慢回味每一瞬间的精彩</h2>
                 <p>后置960帧电影般超慢动作视频，将眨眼间的美妙展现得淋漓尽致！<br/>更能AI 精准分析视频内容，15个场景智能匹配背景音效。</p>
-                <div class="video-bg"></div>
+                <div class="video-bg" @click="showSlide='slideDown'"></div><!-- 点击背景图片弹出动画 -->
                 <div class="video-box"><!-- 视频盒子 -->
-                    <div class="overlay"></div>><!-- 视频的制造 -->
-                    <div class="video"><!-- 视频 -->
-                        <span class="icon-close"></span><!-- 添加关闭按钮 -->
+                    <div class="overlay" v-if="showSlide=='slideDown'"></div>><!-- 视频的制造 -->
+                    <div class="video" :class="showSlide"><!-- 视频 -->
+                        <span class="icon-close" @click="showSlide='slideUp'"></span><!-- 添加关闭按钮 -->
                         <!-- controls:视频播放控件 需要设置视频才可以播放 --> 
                         <!-- autoplay自动播放 -->
                         <!-- muted静音输出 -->
@@ -67,6 +67,8 @@ export default {
     },
     data(){
       return {
+        showSlide:'',/* 控制video的过渡动画 */
+        product:{},/* 保存商品信息 */
         swiperOption:{//可以查看Swiper插件文档
           autoplay:true,
           slidesPerView:3,
@@ -80,9 +82,19 @@ export default {
       }
     },
     mounted(){
-     
+        this.getProductInfo();
     },
     methods:{
+        getProductInfo(){
+            let id = this.$route.params.id;//获取当前页面的商品id
+            this.axios.get('/products/'+id).then(res=>{
+                this.product = res;//保存信息
+            })
+        },
+        buy(){/* 立即购买按钮 */
+            let id = this.$route.params.id;
+            this.$router.push('/detail/'+id);
+        }
     }
 }
 </script>
@@ -90,6 +102,9 @@ export default {
 <style lang="scss">
  @import './../assets/scss/mixin.scss';
 .product{
+    .product-param{
+        z-index: 10;
+    }
     .content{
       .item-bg{
         background:url('/imgs/product/product-bg-1.png') no-repeat center;
@@ -135,6 +150,7 @@ export default {
       }
       .item-swiper{
         margin:36px auto 52px;
+        z-index: 9;
         .desc{
           font-size:18px;
           color:#333333;
@@ -172,19 +188,58 @@ export default {
                 @include position(fixed);
                 opacity: .4;//透明度
                 background-color:#cccccc;
+                z-index: 11;
+            }
+            /* 
+                视频播放动画  方案二
+            */
+            @keyframes slideDown{
+                from{
+                    top:-50%;
+                    opacity: 0;
+                }
+                to{
+                    top:50%;
+                    opacity: 1;
+                }
+            }
+            @keyframes slideUp{
+                from{
+                    top:50%;
+                    opacity: 1;
+                }
+                to{
+                    top:-50%;
+                    opacity: 0;
+                }
             }
             .video{
                 /* 
                     fixed是相对于整个窗口定位
                     absolute是相对于document文档定位
                 */
-                z-index: 9;
+                z-index: 12;
                 position:fixed;//设置视频居中
-                top: 50%;
+                top: -50%;
                 left: 50%;
                 transform: translate(-50%,-50%);
                 width: 1000px;//设置视频大小
                 height: 536px;
+                opacity: 0;
+                &.slideDown{/* 调用动画  方案二*/
+                    animation: slideDown .6s linear;
+                    top: 50%;/* 动画只执行一次,会变回原样  使用top固定 */
+                    opacity: 1;
+                }
+                &.slideUp{/* 调用动画 方案二*/
+                    animation: slideUp .6s linear;
+                }
+                //opacity: 0;/* 隐藏播放框 */
+                // transition: all .6s,;方案一
+                // &.slide{/* 过渡动画 */
+                //     top:50%;
+                //     opacity: 1;/* 显示播放框 */
+                // }/* 播放动画效果  方案一 */
                 .icon-close{
                     position: absolute;
                     top: 20px;

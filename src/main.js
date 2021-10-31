@@ -52,6 +52,7 @@ axios.interceptors.response.use((response)=>{
       // 在这里取不到router，所以用window
       window.location.href = '/#/login';
     }
+    return Promise.reject(res);/* 对错误信息进行抛出 */
   }else{
     alert(res.msg);
     return Promise.reject(res);/* 对错误信息进行抛出 */
