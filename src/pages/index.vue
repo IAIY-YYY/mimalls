@@ -235,8 +235,9 @@ export default {
 
             })
         },
-        addCart(id){/* 添加购物车 */
+        addCart(id){/* 添加购物车  */
             
+            //调用添加购物车接口   后台更新
             this.axios.post('/carts',{
                 productId:id,
                 selected:true,/* 加入购物车默认式选中状态 */
