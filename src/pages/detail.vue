@@ -44,7 +44,7 @@
                 <div class="phone-total">总计：{{product.price}}元</div>
             </div>
             <div class="btn-group">
-                <a href="javascript:;" class="btn btn-huge fl" @click="addCart">加入购物车</a>
+                <a href="javascript:;" class="btn btn-huge fl" @click="showModals">加入购物车</a>
             </div>
         </div>
       </div>
@@ -58,16 +58,31 @@
       </div>
     </div>
     <service-bar></service-bar>
+    <modal 
+            title="提示" 
+            sureText="确定" 
+            btnType="1" 
+            modalType="middle" 
+            :showModal="showModal"
+            @submit="addCart"
+            @cancel="showModal=false"
+            >
+            <template v-slot:body><!-- 新版本插槽的使用 -->
+                <p>商品添加成功！</p>
+            </template>
+        </modal>
   </div>
 </template>
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import ProductParam from './../components/ProductParam'
 import ServiceBar from './../components/Service-bar.vue';
+import Modal from '../components/Modal.vue'
 export default{
   name:'detail',
     data(){
         return {
+            showModal:false,
             id:this.$route.params.id,//获取商品ID
             version:1,/* 动态控制手机版本 */
             product:{},
@@ -83,6 +98,7 @@ export default{
     components:{
         Swiper,
         SwiperSlide,
+        Modal,
         ProductParam,
         ServiceBar
     },
@@ -103,6 +119,10 @@ export default{
                 this.$store.dispatch('saveCartCount',res.cartTotalQuantity);//更新购物车数量
                 // this.$router.push('/cart');//先跳转到购物车
             })
+            this.showModal = false;
+        },
+        showModals(){
+            this.showModal = true;
         }
     }
 }

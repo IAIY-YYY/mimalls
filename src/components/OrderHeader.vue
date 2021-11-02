@@ -35,6 +35,7 @@ export default {
 
 <style lang="scss">
 .order-header{
+    border-bottom: 2px solid #ff6600;
     .container{
         padding: 15px 0;
         .header-logo{

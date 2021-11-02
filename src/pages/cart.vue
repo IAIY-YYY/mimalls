@@ -146,7 +146,7 @@ export default {
             if(isCheck){
                 alert('请选择一件商品')
             }else{
-                this.$router.push('/order/confim');
+                this.$router.push('/order/confirm');
             }
         }
     }

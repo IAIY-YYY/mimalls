@@ -1,6 +1,6 @@
 <template>
-    <div>
-      order-comfirm
+    <div class="comfirm">
+      
     </div>
 </template>
 
@@ -8,8 +8,9 @@
 export default {
     name:'order-comfirm',
 }
+       
 </script>
 
-<style scoped>
+<style lang="scss">
 
 </style>
