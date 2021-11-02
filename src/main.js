@@ -5,12 +5,17 @@ import VueLazyload from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
 import store from './store'
 
+// 使用elementUI
+import {Message} from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
 
 Vue.use(VueLazyload,{/* 可以进行全局配置 */
   loading:'/imgs/loading-svg/loading-bars.svg',/* 会有一个指定的动画图片 */
 });
 Vue.use(VueCookie);
-
+// 将elementUI导入原型
+Vue.prototype.$message = Message;
 
 // import env from './env'
 import axios from 'axios'
@@ -54,7 +59,7 @@ axios.interceptors.response.use((response)=>{
     }
     return Promise.reject(res);/* 对错误信息进行抛出 */
   }else{
-    alert(res.msg);
+    this.$message.warning(res.msg);/* element.ui 错误报告 */
     return Promise.reject(res);/* 对错误信息进行抛出 */
   }
 });

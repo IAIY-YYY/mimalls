@@ -59,6 +59,7 @@
 import OrderHeader from '../components/OrderHeader.vue'
 import NavFooter from '../components/NavFooter.vue'
 import ServiceBar from '../components/Service-bar.vue'
+
 export default {
     name:'cart',
     components:{
@@ -92,14 +93,14 @@ export default {
             let selected = item.productSelected;//商品是否选中
             if (type == '-') {//商品增加时
                 if (quantity==1) {
-                    alert('商品至少保留一件');
+                    this.$message.warning('商品至少保留一件');
                     return;
                 }
                 --quantity;
             }else if(type == '+'){//商品减少时
                 // 判断数量是否大于库存(后台有库存)
                 if (quantity>=item.productStock) {
-                    alert('商品不能超过库存数量');
+                    this.$message.warning('商品不能超过库存数量');
                     return;
                 }
                 ++quantity
@@ -119,6 +120,7 @@ export default {
         delProduct(item){
                 //调用删除商品接口
                 this.axios.delete('/carts/'+item.productId).then(res=>{
+                    this.$message.success("删除成功");
                     this.renderData(res);//再次对商品信息进行更改
                 })
         },
@@ -144,7 +146,7 @@ export default {
             //判断每一件是否选中。如果每一件都没有选中的话，则ischeck=true 。反之 isCheck=false
             let isCheck = this.list.every(item=>!item.productSelected);
             if(isCheck){
-                alert('请选择一件商品')
+                 this.$message.success('请选择一件商品')
             }else{
                 this.$router.push('/order/confirm');
             }
