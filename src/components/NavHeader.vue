@@ -12,6 +12,7 @@
                 <div class="topbar-user">
                     <a href="javascript:;" v-if="username">{{username}}</a>
                     <a href="javascript:;" v-if="!username" @click="login">登录</a>
+                    <a href="javascript:;" v-if="username" @click="logout">退出</a>
                     <a href="javascript:;" v-if="username">我的订单</a>
                     <a href="javascript:;" class="my-cart" @click="goToCart"><span class="icon-cart"></span>购物车({{cartCount}})</a>
                 </div>
@@ -149,6 +150,11 @@ export default {
     },
     mounted(){
         this.getProductList();/* 组件创建后执行方法 */
+        let params = this.$route.params;
+        if (params&&params.from =='login'){
+            this.getCartCount();
+        }
+        
     },
     methods:{
         getProductList(){/* 获取手机商品列表 */
@@ -167,7 +173,25 @@ export default {
         },
         login(){
             this.$router.push('/login');/* 登录跳转 */
-        }
+        },
+        logout(){
+            this.axios.post('/user/logout').then(()=>{//调用接口退出登录。后台已经设置好清除会话
+                this.$message.success('退出成功！');
+                this.$cookie.set('userId','',{expires:'-1'});//expires:-1 过期时间即可生效
+                this.$store.dispatch('saveUserName','');//清空用户名
+                this.$store.dispatch('saveCartCount','0');//清空购物车
+            })
+        },
+        getCartCount(){/* 退出登录之后再次获取购物车的数量 */
+            /* 
+                和获取用户信息相同
+            */
+            this.axios.get('/carts/products/sum').then((res)=>{
+            // to-do 保存在Vuex中
+            this.$store.dispatch('saveCartCount',res);
+
+      })
+    }
     }
 
 }

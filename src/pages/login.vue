@@ -55,9 +55,20 @@ export default {
             username,
             password
         }).then((res)=>{
-            this.$cookie.set('userId',res.id,{expores:'1M'});/* 可以查找插件npmjs查看vue-cookie的用法 */
+            this.$cookie.set('userId',res.id,{expores:'Session'});/* 可以查找插件npmjs查看vue-cookie的用法 */
             this.$store.dispatch('saveUserName',res.username)
-            this.$router.push('/index');
+            this.$router.push({
+              //query传参的方法
+              // path:'/index',  
+              // query:{//利用query传参判断跳转。优化请求获取购物车数量性能
+              //   from:'login',
+              // }
+
+              name:'index',//params传参需要用name设置路径。router配置也是name
+              params:{//参数看不到
+                from:'login'
+              }
+            });
         })
     },
     //注册

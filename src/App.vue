@@ -16,8 +16,11 @@ export default {
     }
   },
   mounted () {
-    this.getUser();
-    this.getCartCount();
+    if (this.$cookie.get('userId')) {//优化接口信息。过滤掉暂时不需要的接口信息
+      this.getUser();
+      this.getCartCount();
+    }
+    
   },
   methods: {
     getUser(){/* 获取用户信息 */
