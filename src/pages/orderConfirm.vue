@@ -25,24 +25,24 @@
                     <div class="item-address">
                         <h2 class="addr-title">收货地址</h2>
                         <div class="addr-list clearfix">
-                            <div class="addr-info" v-for="(item,index) in list" :key="index">
+                            <div class="addr-info" :class="{'checked':index==checkIndex}" @click="checkIndex=index" v-for="(item,index) in list" :key="index">
                                 <h2>{{item.receiverName}}</h2>
                                 <div class="phone">{{item.receiverMobile}}</div>
                                 <div class="street">{{item.receiverProvince+''+ item.receiverCity + ' ' + item.receiverDistrict + ' ' + item.receiverAddress}}</div>
                                 <div class="action">
-                                    <a href="javascript:;" class="fl">
+                                    <a href="javascript:;" class="fl" @click="delAddress(item)">
                                         <svg class="icon icon-del"><!-- svg就是矢量图 用来设置图标 -->
-                                            <use xlink:href="#icon-del"></use>
+                                            <use xlink:href="#icon-del"></use><!-- 删除 图标 -->
                                         </svg>
                                     </a>
-                                    <a href="javascript:;" class="fr">
+                                    <a href="javascript:;" class="fr" @click="editAddressModal(item)">
                                         <svg class="icon icon-edit">
-                                            <use xlink:href="#icon-edit"></use>
+                                            <use xlink:href="#icon-edit"></use><!-- 编辑 图标 -->
                                         </svg>
                                     </a>
                                 </div>
                             </div>
-                            <div class="addr-add">
+                            <div class="addr-add" @click="openAddressModal">
                                 <div class="icon-add"></div>
                                 <div>添加新地址</div>
                             </div>
@@ -94,23 +94,87 @@
                     </div>
                     <div class="btn-group">
                         <a href="/#/cart" class="btn btn-default btn-large">返回购物车</a>
-                        <a href="javascript:;" class="btn btn-large">去结算</a>
+                        <a href="javascript:;" class="btn btn-large" @click="orderSubmit">去结算</a>
                     </div>
                 </div>
             </div>
         </div>
+        <modal
+            title="新增确认"
+            btnType="1"
+            :showModal="showEditModal"
+            @cancel='showEditModal=false'
+            @submit="submitAddress"
+        >
+            <template v-slot:body>
+                <div class="edit-wrap">
+                    <div class="item">
+                        <!-- placeholder默认显示的文本  利用对象来保存一个名称(双向绑定的内容都绑定到一个对象中并创建属性)-->
+                        <input type="text" class="input" placeholder="姓名" v-model="checkedItem.receiverName">
+                        <input type="text" class="input" placeholder="手机号" v-model="checkedItem.receiverMobile">
+                    </div>
+                    <div class="item">
+                        <select name="province" v-model="checkedItem.receiverProvince"><!-- 下拉框  省-->
+                            <option value="北京">北京</option>
+                            <option value="天津">北京</option>
+                            <option value="河北">河北</option>
+                        </select>
+                        <select name="city" v-model="checkedItem.receiverCity"><!-- 下拉框  城市-->
+                            <option value="北京">北京</option>
+                            <option value="天津">北京</option>
+                            <option value="河北">石家庄</option>
+                        </select>
+                        <select name="district" v-model="checkedItem.receiverDistrict"><!-- 下拉框  区-->
+                            <option value="北京">昌平区</option>
+                            <option value="天津">海淀区</option>
+                            <option value="河北">西城区</option>
+                            <option value="北京">顺义区</option>
+                            <option value="天津">房山区</option>
+                            <option value="河北">东城区</option>
+                        </select>
+                    </div>
+                    <div class="item"><!-- 详细地址 -->
+                        <textarea name="street" v-model="checkedItem.receiverAddress"></textarea><!-- 大的文本框 -->
+                    </div>
+                    <div class="item">
+                        <input type="text" class="input" placeholder="邮编" v-model="checkedItem.receiverZip">
+                    </div>
+                </div>
+            </template>
+        </modal>
+        <modal
+            title="删除确认"
+            btnType="1"
+            :showModal="showDelModal"
+            @cancel='showDelModal=false'
+            @submit="submitAddress"
+        >
+            <template v-slot:body>
+                <p>您确认要删除此地址嘛</p>
+            </template>
+        </modal>
     </div>
 </template>
 
 <script>
+import Modal from '../components/Modal.vue'
 export default {
     name:'order-comfirm',
+    components: {
+        Modal
+    },
     data () {
         return {
-            list:[],//收获地址列表
+            list:[],//收获地址列表  
+            checkedItem:{},//保存收获地址中的对象
+            userAction:'',//用户的行为  0：新增  1：编辑 2：删除
+            showDelModal:false,//默认为false。弹窗不显示 是否显示删除弹框
+            showEditModal:false,//是否显示新增或者编辑弹框
+            checkIndex:0,//当前收获地址选中的索引
+
             cartList:[],//购物车中需要结算的商品列表
             cartTotalPrice:0,//商品的总金额。接口已经算出。直接调用即可
-            count:0,//商品结算数量  
+            count:0,//商品结算数量
         }
     },
     mounted () {
@@ -125,6 +189,74 @@ export default {
                 this.list = res.list;//获取收获地址列表
             })
         },
+        delAddress(item){//删除用户地址
+            this.checkedItem =item;//保存用户id
+            this.userAction = 2;//表示删除
+            this.showDelModal =true;
+        },
+        openAddressModal(){//打开新增地址弹框
+             this.userAction = 0;//表示新增
+             this.checkedItem ={};//设置为空。清除前一个操作的缓存内容
+             this.showEditModal =true;//显示新增对话框
+        },
+        editAddressModal(item){//打开编辑地址弹框
+             this.userAction = 1;//表示编辑
+             this.checkedItem =item;//设置为空。清除前一个操作的缓存内容
+             this.showEditModal =true;//显示新增对话框
+        },
+        submitAddress(){// 地址删除、编辑、新增功能 封装
+            let {checkedItem,userAction} = this;//先获取当前选中的哪一项
+            let method,url,params={};//定义请求方法和请求地址  接口中的方法
+            if (userAction == 0) {//新增地址接口
+                method = 'post',url='/shippings';
+            }else if(userAction == 1){//编辑地址接口
+                method = 'put',url='/shippings/'+checkedItem.id;
+            }else{
+                method = 'delete',url='/shippings/'+checkedItem.id;
+            }
+            if (userAction==0||userAction==1) {
+                let {receiverName,receiverMobile,receiverProvince,receiverCity,receiverDistrict,receiverAddress,receiverZip} = checkedItem;//解构数组
+                let errMsg='';//定义弹窗内容变量
+                if (!receiverName) {//如果收货人为空时。给出提示
+                    errMsg='请输入收货人名称'
+                }else if(!receiverMobile|| !/\d{11}/.test(receiverMobile)){/* 手机号为空或不符合11位正则表达式 */
+                    errMsg='请输入正确格式的手机号'
+                }else if(!receiverProvince){/* 判断非空 */
+                    errMsg='请选择省份'
+                }else if(!receiverCity){
+                    errMsg='请选择对应的城市'
+                }else if(!receiverDistrict||!receiverAddress){
+                    errMsg='请输入收获地址'
+                }else if(!/\d{6}/.test(receiverZip)) {
+                    errMsg = "请输入六位邮编"
+                }
+                if (errMsg) {
+                    this.$message.error(errMsg);
+                    return;//返回空。不执行下列代码
+                }
+                params = {//当userAction==0或1时新增编辑地址保存获取参数  再进行接口调用参数
+                    receiverName,//获取v-modal绑定的name  下面也是一样
+                    receiverMobile,
+                    receiverProvince,
+                    receiverCity,
+                    receiverDistrict,
+                    receiverAddress,
+                    receiverZip
+                }
+            }
+            this.axios[method](url,params).then(()=>{//[] 表示变量。
+                this.closeModal();//清除数据
+                this.getAddressList();//重新拉取一次地址数据
+                this.$message.success('操作成功！');
+            });
+        },
+        closeModal(){//初始化checkedItem userAction showDelModal
+            this.checkedItem ={};//表示保存用户id
+            this.userAction = '';//表示删除
+            this.showDelModal =false;
+            this.showEditModal =false;//关闭弹窗
+        },
+
         getCartList(){//购物车地址
             //购物车结算列表
             this.axios.get('/carts').then(res=>{
@@ -138,6 +270,29 @@ export default {
                     this.count += item.quantity;//累加选中的商品数量
                 })
             })
+        },
+        orderSubmit(){/* 提交订单 */
+            let item = this.list[this.checkIndex];//动态获取当前索引
+            if (!item) {
+                this.$message.error('请选则一个收获地址');
+                return;//防止往下走
+            }
+            this.axios.post('orders',{/* 调用订单接口地址。接口地址需要传入商品id */
+                shippingId:item.id
+            }).then((res)=>{
+                console.log(res);
+                this.$router.push({
+                    /* 
+                        path->query
+                        name->params
+                    */
+                    path:'/order/pay',
+                    query:{
+                        orderNo:res.orderNo
+                    }
+                })
+            })
+
         }
     },
 }
@@ -298,34 +453,34 @@ export default {
       }
     }
     .edit-wrap{
-      font-size:14px;
-      .item{
-        margin-bottom:15px;
-        .input{
-          display:inline-block;
-          width:283px;
-          height:40px;
-          line-height:40px;
-          padding-left:15px;
-          border:1px solid #E5E5E5;
-          &+.input{
-            margin-left:14px;
-          }
-        }
-        select{
-          height:40px;
-          line-height:40px;
-          border:1px solid #E5E5E5;
-          margin-right:15px;
-        }
-        textarea{
-          height:62px;
-          width:100%;
-          padding:13px 15px;
-          box-sizing:border-box;
-          border:1px solid #E5E5E5;
+        font-size: 14px;
+        .item{
+            margin-bottom: 15px;
+            .input{
+                display: inline-block;
+                width: 283px;
+                height: 40px;
+                line-height: 40px;
+                padding-left: 15px;
+                border: 1px solid #E5E5E5;
+                &+.input{/* 兄弟选择器  选择当前选择器下，下一个input*/
+                    margin-left: 14px;
+                }
+            }
+            select{
+                height: 40px;
+                line-height: 40px;
+                border: 1px solid #E5E5E5;
+                margin-right: 15px;
+            }
+            textarea{
+                height: 62px;
+                width: 100%;
+                padding: 13px 15px;
+                border: 1px solid #E5E5E5;
+                box-sizing: border-box;/* w3c盒模型 */
+            }
         }
       }
-    }
   }
 </style>
