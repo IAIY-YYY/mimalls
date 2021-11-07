@@ -59,12 +59,12 @@ axios.interceptors.response.use((response)=>{
     }
     return Promise.reject(res);/* 对错误信息进行抛出 */
   }else{
-    this.$message.warning(res.msg);/* element.ui 错误报告 */
+    Message.warning(res.msg);/* element.ui 错误报告 */
     return Promise.reject(res);/* 对错误信息进行抛出 */
   }
 },(error)=>{//对微信支付轮询的服务器状态错误进行抛出
   let res = error.response;
-  this.$message.error(res.data.message);
+  Message.error(res.data.message);
   return Promise.reject(error);/* 对错误信息进行抛出 */
 });
 

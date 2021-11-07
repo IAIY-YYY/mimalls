@@ -33,3 +33,10 @@
     background: url($img) no-repeat center;
     background-size: contain;/* contain:把图像图像扩展至最大尺寸，以使其宽度和高度完全适应内容区域.*/
 }
+@mixin height($h:0,$lh:$h) {
+    height: $h;
+    line-height: $lh;
+}
+@mixin border($bw:1px,$bc:$colorF,$bs:solid) {
+    border: $bw $bs $bc; 
+}
