@@ -47,6 +47,7 @@
               </div>
             </div>
             <el-pagination
+              v-if="false"
               class="pagination"
               background
               layout='prev,pager,next'
@@ -54,8 +55,10 @@
               :total='total'
               @current-change ="handleChang"
             ><!-- 分页器的内置方法属性 -->
-            </el-pagination>
-            <el-button type="primary" :loading="loading">加载更多</el-button>
+            </el-pagination><!-- 第一种方法实现分页 -->
+            <div class="load-more"><!-- 第二种方法实现加载更多 -->
+              <el-button type="primary" :loading="loading" @click="loadMore">加载更多</el-button>
+            </div>
             <no-data v-if="!loading && list.length==0"></no-data>
           </div>
         </div>
@@ -64,9 +67,10 @@
 </template>
 
 <script>
-import NoData from '../components/NoData.vue'
 import Loading from '../components/Loading.vue'
 import OrderHeader from '../components/OrderHeader.vue'
+import NoData from '../components/NoData'
+
 
 import {pagination,Button} from 'element-ui'/* 分页器的导入 */
 
@@ -98,12 +102,12 @@ export default {
         this.loading = true;
         this.axios.get('/orders',{
           params:{
-            pageSize:2,/* 一页两条 */
+            pageSize:1,/* 一页两条 */
             pageNum:this.pageNum
           }
         }).then((res)=>{
           this.loading = false;
-          this.list = res.list;
+          this.list = this.list.concat(res.list);/* 对数组进行累加  点击加载更多时可以不覆盖  使用第一种方法时不用累加*/
           this.total = res.total;/* 多少条的数据。分页器中的内容 */
         }).catch(()=>{
           this.loading = false
@@ -131,6 +135,10 @@ export default {
       handleChang(pageNum){/* 点击分页(存在一个当前页回调参数)  分页器中的自定义事件 */
         this.pageNum = pageNum;
         this.getOrderList()
+      },
+      loadMore(){//点击加载更多
+        this.pageNum++;
+        this.getOrderList();
       }
     }
 }
