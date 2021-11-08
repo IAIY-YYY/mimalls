@@ -3,22 +3,9 @@ import Router from 'vue-router'
 
 Vue.use(Router);
 
-// 导入组件
+// 导入组件  按需加载
 import Home from './pages/home.vue'
-
 import Index from './pages/index.vue'
-import Product from './pages/product.vue'
-import Detail from './pages/detail.vue'
-
-import Cart from './pages/cart.vue'
-import Login from './pages/login.vue'
-
-// Order子路由
-import Order from './pages/order.vue'
-import OrderConfirm from './pages/orderConfirm.vue'
-import OrderList from './pages/orderList.vue'
-import OrderPay from './pages/orderPay.vue'
-import Alipay from './pages/alipay.vue'
 
 export default new Router({
     // mode:history,
@@ -37,49 +24,49 @@ export default new Router({
                 {
                     path:'/product/:id',//产品详情
                     name:'product',
-                    component:Product,
+                    component:() => import('./pages/product.vue'),
                 },
                 {
                     path:'/detail/:id',//购物详情
                     name:'detail',
-                    component:Detail,
+                    component:() => import('./pages/detail.vue'),
                 },
             ]
         },
         {
             path:'/cart',
             name:'cart',
-            component:Cart,
+            component:() => import('./pages/cart.vue'),
         },
         {
             path:'/login',
             name:'login',
-            component:Login,
+            component:() => import('./pages/login.vue'),
         },
         {
             path:'/order',
             name:'order',
-            component:Order,
+            component:() => import('./pages/order.vue'),
             children:[
                 {
                     path:'list',
                     name:'order-list',
-                    component:OrderList
+                    component:() => import('./pages/orderList.vue')
                 },
                 {
                     path:'pay',
                     name:'order-pay',
-                    component:OrderPay
+                    component:() => import('./pages/orderPay.vue')
                 },
                 {
                     path:'confirm',
                     name:'order-confirm',
-                    component:OrderConfirm
+                    component:() => import('./pages/orderConfirm.vue')
                 },
                 {
                     path:'alipay',
                     name:'alipay',
-                    component:Alipay
+                    component:() => import('./pages/alipay.vue')
                 }
                 
             ]
