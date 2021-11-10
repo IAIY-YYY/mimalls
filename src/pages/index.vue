@@ -9,7 +9,7 @@
                             <div class="children"><!-- 导航出的内容 -->
                                 <ul v-for="(item,index) in menuList" :key="index">
                                     <li v-for="(sub,index) in item" :key="index">
-                                        <a :href="sub?'#/poduct/'+sub.id:''"><!-- 判断sub是否为true。判断取值 -->
+                                        <a :href="sub?'#/product/'+sub.id:''"><!-- 判断sub是否为true。判断取值 -->
                                             <img v-lazy="sub?sub.img:'/imgs/item-box-1.png'" alt="">
                                             {{sub?sub.name:'小米9'}}
                                         </a>

@@ -5,11 +5,11 @@
             <p>小米商城</p>
         </div>
         <div class="footer-link">
-            <a href="javascript:;" target="_blank">河畔一角主页</a><span>|</span>
-            <a href="javascript:;" target="_blank">Vue全栈课程</a><span>|</span>
-            <a href="javascript:;" target="_blank">React全家桶课程</a><span>|</span>
-            <a href="javascript:;" target="_blank">微信支付专项课程</a><span>|</span>
-            <a href="javascript:;" target="_blank">配套课程：Java通用型支付+电商平台双系统实战</a>
+            <a href="javascript:;" target="_blank">赵百通———</a><span>|</span>
+            <a href="javascript:;" target="_blank">——————</a><span>|</span>
+            <a href="javascript:;" target="_blank">——————</a><span>|</span>
+            <a href="javascript:;" target="_blank">——————</a><span>|</span>
+            <a href="javascript:;" target="_blank">————————————</a>
         </div>
         <div class="copyright">
             Copyright ©2020 
