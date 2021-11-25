@@ -330,7 +330,7 @@ export default {
                     align-items: center;/* 垂直居中 */
                     input{
                         border: none;/* 边框消失 */
-                        box-sizing: border-box;/* 设置为W3C盒模型。这样width就不包括padding值了。IE和模型包括 */
+                        box-sizing: border-box;/* 设置为IE盒模型。这样width就不包括padding值了。IE和模型包括 */
                         border-right:1px solid #e0e0e0;
                         width: 264px;
                         height: 50px;

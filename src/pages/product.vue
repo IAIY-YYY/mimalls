@@ -215,6 +215,7 @@ export default {
             }
             .video{
                 /* 
+                    fiexd/absolute都会使元素脱离文档流
                     fixed是相对于整个窗口定位
                     absolute是相对于document文档定位
                 */
